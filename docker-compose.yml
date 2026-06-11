@@ -1,0 +1,43 @@
+# ============================================================================
+# Docker Compose Orcherstration Suite for Spectra Elite #38 Platform
+# Binds local backend application container to a standard PostgreSQL server instance
+# ============================================================================
+
+version: '3.8'
+
+services:
+  # Full-Stack Application Service (Client + Express API proxies)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spectra_elite_app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DATABASE_URL=postgresql://spectra_admin:elite_pass38@db:5432/spectra_db?schema=public
+      - GEMINI_API_KEY=your_gemini_api_key_here
+      - APP_URL=http://localhost:3000
+    depends_on:
+      - db
+    restart: always
+
+  # Dedicated Postgres Database Server
+  db:
+    image: postgres:14-alpine
+    container_name: spectra_postgres_db
+    environment:
+      - POSTGRES_USER=spectra_admin
+      - POSTGRES_PASSWORD=elite_pass38
+      - POSTGRES_DB=spectra_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  pgdata:
+    driver: local
