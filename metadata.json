@@ -1,6 +1,0 @@
-{
-  "name": "Spectra Elite #38",
-  "description": "Premium coliving, Airbnb, and rental property management platform with guest portal, Property Management System (PMS), CRM pipeline, and rent collection.",
-  "requestFramePermissions": ["geolocation"],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
